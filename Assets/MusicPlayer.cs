@@ -18,8 +18,12 @@ public class MusicPlayer : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         musicName.text = audioSource.clip.name;
         int lengthInSeconds = Convert.ToInt32(audioSource.clip.length);
+        //musicLength.text = $"{lengthInSeconds / 60}:{lengthInSeconds-(60* (lengthInSeconds / 60))}";
+        int minutes = (int)audioSource.clip.length / 60;
+        int seconds = (int)audioSource.clip.length % 60;
+        musicLength.text = minutes + ':' + string.Format("{0:00}", seconds);
+
         slider.maxValue = lengthInSeconds;
-        musicLength.text = $"{lengthInSeconds / 60}:{lengthInSeconds-(60* (lengthInSeconds / 60))}";
     }
 
     void Update()
