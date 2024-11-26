@@ -34,9 +34,17 @@ public class MusicPlayer : MonoBehaviour
     {
         currentTime.text = $"{Convert.ToInt32(audioSource.time) / 60}:{string.Format("{0:00}",Convert.ToInt32(audioSource.time) % 60)}";
 
-        float[] samples = new float[100];
+        float[] samples = new float[512];
         audioSource.clip.GetData(samples, audioSource.timeSamples);
-        onBeat.Invoke(samples[0]);
+
+        float sum = 0;
+        foreach (var sample in samples)
+        {
+            sum += Mathf.Abs(sample);
+        }
+        float average = sum / samples.Length;
+
+        onBeat.Invoke(average);
     }
 
     public void Pause()
