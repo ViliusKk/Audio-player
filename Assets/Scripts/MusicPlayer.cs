@@ -12,7 +12,7 @@ public class MusicPlayer : MonoBehaviour
     public TMP_Text currentTime;
     public TMP_Text musicLength;
     public Slider slider;
-    public UnityEvent<float> onBeat;
+    public static UnityEvent<float> onBeat = new();
     AudioSource audioSource;
 
     void Start()
@@ -33,6 +33,8 @@ public class MusicPlayer : MonoBehaviour
     void Update()
     {
         currentTime.text = $"{Convert.ToInt32(audioSource.time) / 60}:{string.Format("{0:00}",Convert.ToInt32(audioSource.time) % 60)}";
+
+        slider.value = audioSource.time;
 
         float[] samples = new float[512];
         audioSource.clip.GetData(samples, audioSource.timeSamples);
